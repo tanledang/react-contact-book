@@ -1,8 +1,12 @@
 import { React, useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { addContact } from '../features/contacts/contactsSlice';
 
-const AddContactForm = ({setContacts}) => {
+const AddContactForm = () => {
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
+
+    const dispatch = useDispatch();
 
     const submitForm = async (event) => {
         event.preventDefault();
@@ -19,7 +23,7 @@ const AddContactForm = ({setContacts}) => {
         .then((response) => response.json())
         .then((data) => {
             console.log('Success:', data);
-            setContacts(prev => [...prev, data]);
+            dispatch(addContact(data));
             setName("");
             setEmail("");
         })

@@ -1,14 +1,17 @@
-import {React, useState, useEffect} from 'react';
+import { React, useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux'
+import { setContacts, deleteContactById } from '../features/contacts/contactsSlice';
 import Contact from './Contact';
 import AddContactForm from './AddContactForm';
 
 const ContactBook = () => {
-    const [contacts, setContacts] = useState([]);
+    const contacts = useSelector(state => state.contacts.contacts);
+    const dispatch = useDispatch();
 
     const fetchContactsToState = async () => {
         await fetch("/contact-book")
             .then(response => response.json())
-            .then(json => setContacts(json));
+            .then(json => dispatch(setContacts(json)));
     }
 
     const removeContactById = async (id) => {
@@ -22,8 +25,7 @@ const ContactBook = () => {
         .then((response) => response.json())
         .then((data) => {
             console.log('Success:', data);
-            const updatedContacts = contacts.filter(contact => contact.id !== id);
-            setContacts(updatedContacts)
+            dispatch(deleteContactById(id))
         })
     }
 
@@ -37,7 +39,7 @@ const ContactBook = () => {
             {contacts.map(contact => 
             <Contact contact={contact} key={contact.id} removeContactById={removeContactById} fetchContactsToState={fetchContactsToState}/>
             )}
-            <AddContactForm setContacts={setContacts} fetchContactsToState={fetchContactsToState}/>
+            <AddContactForm/>
         </div>
     )
 
