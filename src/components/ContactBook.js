@@ -3,6 +3,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setContacts, deleteContactById } from '../features/contacts/contactsSlice';
 import Contact from './Contact';
 import AddContactForm from './AddContactForm';
+import LoginForm from './LoginForm';
 
 const ContactBook = () => {
     const contacts = useSelector(state => state.contacts.contacts);
@@ -35,6 +36,7 @@ const ContactBook = () => {
     
     return (
         <div className="body">
+            <LoginForm/>
             <h1>Contact book</h1>
             {contacts.map(contact => 
             <Contact contact={contact} key={contact.id} removeContactById={removeContactById} fetchContactsToState={fetchContactsToState}/>
