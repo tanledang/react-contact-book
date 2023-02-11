@@ -23,6 +23,9 @@ const AddContactForm = ({setContacts}) => {
             setName("");
             setEmail("");
         })
+        .catch((error) =>
+        console.log("Unable to add contact", error)
+        )
     }
     
     return (
